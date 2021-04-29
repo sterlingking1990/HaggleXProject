@@ -1,20 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hagglexproject/ui/login.dart';
-
-void main() => runApp(DashboardApp());
-
-class DashboardApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: SafeArea(
-        child: DashboardPage(),
-      ),
-    );
-  }
-}
 
 class DashboardPage extends StatefulWidget {
   @override
@@ -57,14 +42,11 @@ class DashboardPageState extends State<DashboardPage> {
             ElevatedButton(
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.cyan)),
-                onPressed: () => Navigator.pop(context,
-                    MaterialPageRoute(builder: (context) => LoginPage())),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
                 child: Text("Signout", style: TextStyle(color: Colors.white)))
           ]),
         ),
       ));
-}
-
-Widget HaggleXUpdate(Color color) {
-  return Container(width: 290, color: color);
 }

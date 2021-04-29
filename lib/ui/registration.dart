@@ -80,15 +80,18 @@ class RegisterFormState extends State<RegisterForm> {
               children: [
                 Padding(
                     padding: EdgeInsets.only(left: 20, top: 30),
-                    child: Container(
-                      width: 50,
-                      height: 40,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.blue),
-                      child: Icon(
-                        Icons.arrow_back,
-                        color: Colors.white,
+                    child: InkWell(
+                      onTap: () => Navigator.pop(context),
+                      child: Container(
+                        width: 50,
+                        height: 40,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.blue),
+                        child: Icon(
+                          Icons.arrow_back,
+                          color: Colors.white,
+                        ),
                       ),
                     )),
                 Expanded(
@@ -192,6 +195,7 @@ class RegisterFormState extends State<RegisterForm> {
                                   child: Padding(
                                     padding: EdgeInsets.only(right: 20),
                                     child: TextField(
+                                      onTap: () => enableRegistration(),
                                       controller: phoneNumberInputController,
                                       decoration: InputDecoration(
                                           enabledBorder: UnderlineInputBorder(
@@ -208,6 +212,7 @@ class RegisterFormState extends State<RegisterForm> {
                             Padding(
                               padding: EdgeInsets.only(top: 30, right: 20),
                               child: TextField(
+                                onTap: () => enableRegistration(),
                                 controller: referralCodeInputController,
                                 decoration: InputDecoration(
                                     enabledBorder: UnderlineInputBorder(
@@ -309,18 +314,24 @@ class RegisterFormState extends State<RegisterForm> {
         builder:
             // ignore: missing_return
             (context, AsyncSnapshot<RegistrationResponse> response) {
-          if (response.data != null) {
+          if (response.hasData) {
             if (response.data.error != "") {
               return _buildErrorWidget(response.data.error.toString());
+            } else {
+              Future.delayed(const Duration(milliseconds: 100), () {
+                setState(() {
+                  isRegistrationProcessBegan = false;
+                });
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => VerifyAccountPage()));
+                // ignore: unrelated_type_equality_checks
+              });
+              // show the Snackba
             }
-            print(response.data.register.token);
-            navigateToVerification(context);
-            // ignore: unrelated_type_equality_checks
-          } else if (response.data == null) {
-            return _buildErrorWidget(response.error.toString());
-          } else {
-            return buildLoadingWidget();
           }
+          return buildLoadingWidget();
         });
   }
 
@@ -354,13 +365,4 @@ class RegisterFormState extends State<RegisterForm> {
           ],
         ),
       );
-
-  navigateToVerification(context) async {
-    await Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => VerifyAccountPage(),
-            settings:
-                RouteSettings(arguments: emailAddressInputController.text)));
-  }
 }

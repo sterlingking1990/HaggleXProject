@@ -3,9 +3,7 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:hagglexproject/appstate/loginstate.dart';
 import 'package:hagglexproject/model/request/LoginUser.dart';
-import 'package:hagglexproject/model/response/LoginObj.dart';
 import 'package:hagglexproject/model/response/LoginResponse.dart';
-import 'package:hagglexproject/model/response/UserObj.dart';
 import 'package:hagglexproject/ui/dashboard.dart';
 import 'package:hagglexproject/ui/registration.dart';
 
@@ -27,6 +25,8 @@ class LoginPageState extends State<LoginPage> {
     passwordInput = TextEditingController();
     loginState = LoginState();
     super.initState();
+
+    Future.delayed(Duration.zero, handleLoginAndDashboardRouting);
   }
 
   @override
@@ -206,9 +206,6 @@ class LoginPageState extends State<LoginPage> {
     loginState.loginUser(
         LoginInput(input: emailInput.text, password: passwordInput.text));
     return StreamBuilder<LoginResponse>(
-        initialData: LoginResponse(
-            login: LoginObj(user: UserObj(), token: "", twoFactorAuth: false),
-            error: ""),
         stream: loginState.loginStateObservable,
         builder:
             // ignore: missing_return
@@ -216,19 +213,21 @@ class LoginPageState extends State<LoginPage> {
           if (response.hasData) {
             if (response.data.error != "") {
               return _buildErrorWidget(response.data.error.toString());
+            } else {
+              Future.delayed(const Duration(milliseconds: 100), () {
+                setState(() {
+                  isLoggingInButtonClicked = false;
+                  emailInput.text = "";
+                  passwordInput.text = "";
+                });
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => DashboardPage()));
+                // ignore: unrelated_type_equality_checks
+              });
             }
-            navigateToDashboard(context);
-            // ignore: unrelated_type_equality_checks
-          } else if (response.hasError) {
-            return _buildErrorWidget(response.error.toString());
-          } else {
-            return buildLoadingWidget();
+            // show the Snackba
           }
+          return buildLoadingWidget();
         });
-  }
-
-  navigateToDashboard(context) async {
-    await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => DashboardPage()));
   }
 }
