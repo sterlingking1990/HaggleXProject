@@ -1,6 +1,6 @@
 # hagglexproject
 
-This project uses HaggleX Graphql and consumed few of the API such as login, registration and resend password.
+This project uses HaggleX Graphql and consumed few of the API such as login, registration and resend verification code.
 
 
 ## Getting Started
