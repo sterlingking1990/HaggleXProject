@@ -23,9 +23,6 @@ class HaggleX extends StatelessWidget {
   Widget build(BuildContext context) => MaterialApp(
         debugShowCheckedModeBanner: false,
         home: SafeArea(child: HaggleApp()),
-        routes: {
-          '/login': (BuildContext context) => LoginPage(),
-        },
       );
 }
 

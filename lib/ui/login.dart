@@ -115,8 +115,20 @@ class LoginPageState extends State<LoginPage> {
                             width: MediaQuery.of(context).size.width,
                             height: 52,
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Color(0xFFC17500)),
+                              borderRadius: BorderRadius.circular(10),
+                              gradient: LinearGradient(
+                                colors: [
+                                  Color(0x6A4B00BC),
+                                  Color(0xFF3B2671),
+                                  Color(0xFF3B2671),
+                                  Color(0x6A4B00BC),
+                                ],
+                                begin: Alignment.topRight,
+                                end: Alignment.topLeft,
+                                stops: [0.3, 0.5, 0.9, 1],
+                                tileMode: TileMode.clamp,
+                              ),
+                            ),
                             child: FlatButton(
                               child: Text(
                                 'LOG IN',
@@ -180,7 +192,7 @@ class LoginPageState extends State<LoginPage> {
         Padding(
           padding: EdgeInsets.only(top: 10),
           child: Text(
-            "Error occured: $error",
+            "Error : $error",
             style: TextStyle(color: Colors.white),
           ),
         )
@@ -204,6 +216,9 @@ class LoginPageState extends State<LoginPage> {
       );
 
   Widget handleLoginAndDashboardRouting() {
+    if (emailInput.text == "" || passwordInput.text == "") {
+      return _buildErrorWidget("email and password is required");
+    }
     loginState.loginUser(
         LoginInput(input: emailInput.text, password: passwordInput.text));
     return StreamBuilder<LoginResponse>(

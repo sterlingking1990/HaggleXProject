@@ -302,6 +302,12 @@ class RegisterFormState extends State<RegisterForm> {
     if (passwordInputController.text.length < 8) {
       return _buildErrorWidget("Password must be 8 characters and above");
     }
+    if (emailAddressInputController.text == "" ||
+        usernameInputController.text == "" ||
+        passwordInputController.text == "" ||
+        phoneNumberInputController.text == "") {
+      return _buildErrorWidget("one or more required field is empty");
+    }
     registerUserState.registerUser(RegisterUser(
         email: emailAddressInputController.text,
         username: usernameInputController.text,
@@ -347,7 +353,7 @@ class RegisterFormState extends State<RegisterForm> {
         Padding(
           padding: EdgeInsets.only(top: 10),
           child: Text(
-            "Error occured: $error",
+            "Error : $error",
             style: TextStyle(color: Colors.black),
           ),
         )
