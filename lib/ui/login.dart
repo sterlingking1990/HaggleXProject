@@ -204,9 +204,6 @@ class LoginPageState extends State<LoginPage> {
       );
 
   Widget handleLoginAndDashboardRouting() {
-    if (passwordInput.text.length < 8) {
-      return _buildErrorWidget("Password must be 8 characters and above");
-    }
     loginState.loginUser(
         LoginInput(input: emailInput.text, password: passwordInput.text));
     return StreamBuilder<LoginResponse>(
