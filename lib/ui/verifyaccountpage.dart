@@ -67,15 +67,18 @@ class VerifyAccountPageState extends State<VerifyAccountPage> {
               children: [
                 Padding(
                     padding: EdgeInsets.only(left: 20, top: 30),
-                    child: Container(
-                      width: 50,
-                      height: 40,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.blue),
-                      child: Icon(
-                        Icons.arrow_back,
-                        color: Colors.white,
+                    child: InkWell(
+                      onTap: () => Navigator.pop(context),
+                      child: Container(
+                        width: 50,
+                        height: 40,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.blue),
+                        child: Icon(
+                          Icons.arrow_back,
+                          color: Colors.white,
+                        ),
                       ),
                     )),
                 SizedBox(height: 30),
