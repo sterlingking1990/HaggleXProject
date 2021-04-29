@@ -114,7 +114,9 @@ class LoginPageState extends State<LoginPage> {
                           child: Container(
                             width: MediaQuery.of(context).size.width,
                             height: 52,
-                            decoration: BoxDecoration(color: Color(0xFFC17500)),
+                            decoration: BoxDecoration(
+                                color: Color(0xFFC17500),
+                                borderRadius: BorderRadius.circular(10)),
                             child: FlatButton(
                               child: Text(
                                 'LOG IN',
