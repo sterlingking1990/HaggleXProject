@@ -84,6 +84,7 @@ class LoginPageState extends State<LoginPage> {
                   Padding(
                       padding: EdgeInsets.only(left: 20, right: 20),
                       child: TextField(
+                        obscureText: true,
                         style: TextStyle(color: Colors.white),
                         onTap: () => resetLoginButton(),
                         controller: passwordInput,
@@ -203,6 +204,9 @@ class LoginPageState extends State<LoginPage> {
       );
 
   Widget handleLoginAndDashboardRouting() {
+    if (passwordInput.text.length < 8) {
+      return _buildErrorWidget("Password must be 8 characters and above");
+    }
     loginState.loginUser(
         LoginInput(input: emailInput.text, password: passwordInput.text));
     return StreamBuilder<LoginResponse>(
