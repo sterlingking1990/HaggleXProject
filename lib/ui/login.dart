@@ -114,21 +114,7 @@ class LoginPageState extends State<LoginPage> {
                           child: Container(
                             width: MediaQuery.of(context).size.width,
                             height: 52,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              gradient: LinearGradient(
-                                colors: [
-                                  Color(0x6A4B00BC),
-                                  Color(0xFF3B2671),
-                                  Color(0xFF3B2671),
-                                  Color(0x6A4B00BC),
-                                ],
-                                begin: Alignment.topRight,
-                                end: Alignment.topLeft,
-                                stops: [0.3, 0.5, 0.9, 1],
-                                tileMode: TileMode.clamp,
-                              ),
-                            ),
+                            decoration: BoxDecoration(color: Color(0xFFC17500)),
                             child: FlatButton(
                               child: Text(
                                 'LOG IN',
