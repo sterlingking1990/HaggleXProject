@@ -129,6 +129,7 @@ class RegisterFormState extends State<RegisterForm> {
                             Padding(
                               padding: EdgeInsets.only(top: 30, right: 20),
                               child: TextField(
+                                obscureText: true,
                                 onTap: () => enableRegistration(),
                                 controller: passwordInputController,
                                 decoration: InputDecoration(
@@ -298,6 +299,9 @@ class RegisterFormState extends State<RegisterForm> {
   }
 
   handleRegistrationAndLoginRouting() {
+    if (passwordInputController.text.length < 8) {
+      return _buildErrorWidget("Password must be 8 characters and above");
+    }
     registerUserState.registerUser(RegisterUser(
         email: emailAddressInputController.text,
         username: usernameInputController.text,
